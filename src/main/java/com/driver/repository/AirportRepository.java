@@ -46,13 +46,13 @@ public class AirportRepository {
     public double getShortestDurationOfPossibleBetweenTwoCities(City fromCity, City toCity) {
         //Find the duration by finding the shortest flight that connects these 2 cities directly
         //If there is no direct flight between 2 cities return -1.
-        double shortestDuration = Integer.MAX_VALUE * 1.00;
+        double shortestDuration = 1000000000;
         for (Flight f : flightDb.values()) {
             if(f.getToCity().equals(toCity) && f.getFromCity().equals(fromCity)) {
                 shortestDuration = Math.min(shortestDuration, f.getDuration());
             }
         }
-        if(shortestDuration == Integer.MAX_VALUE * 1.00) return -1;
+        if(shortestDuration == 1000000000) return -1;
         return shortestDuration;
     }
 
@@ -132,8 +132,6 @@ public class AirportRepository {
     public int countOfBookingsDoneByPassengerAllCombined(Integer passengerId) {
         //Tell the count of flight bookings done by a passenger: This will tell the total count of flight bookings done by a passenger :
         int cnt = 0;
-        HashMap<Integer,List<Integer>> passengerFlightDb = new HashMap<>();
-
         for(Map.Entry<Integer,List<Integer>> entry: flightPassengerDb.entrySet()) {
             List<Integer> passengerList = entry.getValue();
             for(Integer p: passengerList) {
