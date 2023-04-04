@@ -34,6 +34,11 @@ public class AirportRepository {
                 max = a.getNoOfTerminals();
                 airportName = a.getAirportName();
             }
+            else if(a.getNoOfTerminals() == max) {
+                if(a.getAirportName().equals(airportName)) {
+                    airportName = a.getAirportName();
+                }
+            }
         }
         return airportName;
     }
@@ -54,7 +59,7 @@ public class AirportRepository {
     public int getNumberOfPeopleOn(Date date, String airportName) {
         //Calculate the total number of people who have flights on that day on a particular airport
         //This includes both the people who have come for a flight and who have landed on an airport after their flight
-
+        // public HashMap<Integer, Flight> flightDb = new HashMap<>();
         int cnt = 0;
         for (Flight flight : flightPassengerDb.keySet()) {
             if((flight.getFromCity().equals(airportName)||flight.getToCity().equals(airportName)) && flight.getFlightDate().equals(date)) {
@@ -133,12 +138,13 @@ public class AirportRepository {
                 if(!passengerList.contains(passenger)) {
                     return "FAILURE";
                 }
-                else if(passengerList.contains(passenger)) {
+                if(passengerList.contains(passenger)) {
                     passengerList.remove(passenger);
+                    return "SUCCESS";
                 }
             }
         }
-        return "SUCCESS";
+        return "FAILURE";
     }
 
     public int countOfBookingsDoneByPassengerAllCombined(Integer passengerId) {
@@ -166,14 +172,12 @@ public class AirportRepository {
     public String getAirportNameFromFlightId(Integer flightId) {
         //We need to get the starting airportName from where the flight will be taking off (Hint think of City variable if that can be of some use)
         //return null incase the flightId is invalid or you are not able to find the airportName
-        String airportName = "";
         for (Flight f: flightList) {
             if(f.getFlightId() == flightId) {
-                airportName =  f.getFromCity().name();
-                break;
+                return f.getFromCity().name();
             }
         }
-        return airportName;
+        return null;
     }
 
     public int calculateRevenueOfAFlight(Integer flightId) {
