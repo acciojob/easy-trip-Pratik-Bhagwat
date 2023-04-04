@@ -5,16 +5,10 @@ import com.driver.model.Airport;
 import com.driver.model.City;
 import com.driver.model.Flight;
 import com.driver.model.Passenger;
-import com.driver.service.AirportService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.driver.AirportService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 @RestController
 public class AirportController {
