@@ -165,10 +165,12 @@ public class AirportRepository {
         //Calculate the total revenue that a flight could have
         //That is of all the passengers that have booked a flight till now and then calculate the revenue
         // will also decrease if some passenger cancels the flight
-        int noOfPeopleBookedFlight = flightPassengerDb.get(flightId).size();
-        int revenue = (noOfPeopleBookedFlight*(noOfPeopleBookedFlight + 1)) * 25;
-        int totalRevenue = 3000 * noOfPeopleBookedFlight + revenue;
-        return totalRevenue;
+        int noOfPeopleBooked = flightPassengerDb.get(flightId).size();
+        int variableFare = (noOfPeopleBooked*(noOfPeopleBooked+1))*25;
+        int fixedFare = 3000*noOfPeopleBooked;
+        int totalFare = variableFare + fixedFare;
+
+        return totalFare;
     }
 
     public String addPassenger(Passenger passenger) {
