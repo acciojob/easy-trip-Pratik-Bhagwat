@@ -60,9 +60,14 @@ public class AirportRepository {
         //Calculate the total number of people who have flights on that day on a particular airport
         //This includes both the people who have come for a flight and who have landed on an airport after their flight
         // public HashMap<Integer, Flight> flightDb = new HashMap<>();
+        Airport airport = airportDB.get(airportName);
+        if(Objects.isNull(airport)){
+            return 0;
+        }
+        City city = airport.getCity();
         int cnt = 0;
         for (Flight flight : flightPassengerDb.keySet()) {
-            if((flight.getFromCity().equals(airportName)||flight.getToCity().equals(airportName)) && flight.getFlightDate().equals(date)) {
+            if((flight.getFromCity().equals(city)||flight.getToCity().equals(city)) && flight.getFlightDate().equals(date)) {
                 List<Passenger> passengerList = flightPassengerDb.get(flight);
                 cnt += passengerList.size();
             }
@@ -126,7 +131,7 @@ public class AirportRepository {
 
         Passenger passenger = null;
         for(Integer id : passengerDb.keySet()) {
-            if(id == passengerId) {
+            if(id.equals(passengerId)) {
                 passenger = passengerDb.get(id);
                 break;
             }
@@ -135,7 +140,7 @@ public class AirportRepository {
         for(Flight flight : flightPassengerDb.keySet()) {
             if(flight.getFlightId() == flightId) {
                 List<Passenger> passengerList = flightPassengerDb.get(flight);
-                if(!passengerList.contains(passenger)) {
+                if(passengerList == null) {
                     return "FAILURE";
                 }
                 if(passengerList.contains(passenger)) {
@@ -151,7 +156,7 @@ public class AirportRepository {
         //Tell the count of flight bookings done by a passenger: This will tell the total count of flight bookings done by a passenger :
         Passenger passenger = null;
         for(Integer id : passengerDb.keySet()) {
-            if(id == passengerId) {
+            if(id.equals(passengerId)) {
                 passenger = passengerDb.get(id);
                 break;
             }
@@ -192,7 +197,8 @@ public class AirportRepository {
             }
         }
         int revenue = 0;
-        for(int i = 0; i < passengers.size(); i++) {
+        int size = passengers != null ? passengers.size() : 0;
+        for(int i = 0; i < size; i++) {
             revenue += 3000 + (i * 50);
         }
         return revenue;
