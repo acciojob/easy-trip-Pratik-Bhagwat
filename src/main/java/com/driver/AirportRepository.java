@@ -166,7 +166,7 @@ public class AirportRepository {
         //That is of all the passengers that have booked a flight till now and then calculate the revenue
         // will also decrease if some passenger cancels the flight
         int noOfPeopleBookedFlight = flightPassengerDb.get(flightId).size();
-        int revenue = (noOfPeopleBookedFlight *(noOfPeopleBookedFlight + 1)) * 50;
+        int revenue = (noOfPeopleBookedFlight *(noOfPeopleBookedFlight + 1)) * 25;
         int totalRevenue = 3000 * noOfPeopleBookedFlight + revenue;
         return totalRevenue;
     }
