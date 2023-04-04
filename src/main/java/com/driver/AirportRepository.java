@@ -27,20 +27,20 @@ public class AirportRepository {
     public String getLargestAirportName() {
         //Largest airport is in terms of terminals. 3 terminal airport is larger than 2 terminal airport
         //Incase of a tie return the Lexicographically smallest airportName
-        int max = 0;
-        String airportName = "";
-        for (Airport a: airportDB.values()) {
-            if(a.getNoOfTerminals() > max) {
-                max = a.getNoOfTerminals();
-                airportName = a.getAirportName();
-            }
-            else if(a.getNoOfTerminals() == max) {
-                if(a.getAirportName().equals(airportName)) {
-                    airportName = a.getAirportName();
+        String ans = "";
+        int terminals = 0;
+        for(Airport airport : airportDB.values()){
+
+            if(airport.getNoOfTerminals()>terminals){
+                ans = airport.getAirportName();
+                terminals = airport.getNoOfTerminals();
+            }else if(airport.getNoOfTerminals()==terminals){
+                if(airport.getAirportName().compareTo(ans)<0){
+                    ans = airport.getAirportName();
                 }
             }
         }
-        return airportName;
+        return ans;
     }
 
     public double getShortestDurationOfPossibleBetweenTwoCities(City fromCity, City toCity) {
@@ -81,7 +81,7 @@ public class AirportRepository {
         //Suppose if 2 people have booked the flight already : the price of flight for the third person will be 3000 + 2*50 = 3100
         //This will not include the current person who is trying to book, he might also be just checking price
         int noOfPeopleWhoHaveAlreadyBooked = flightPassengerDb.get(flightId).size();
-        return 3000 + noOfPeopleWhoHaveAlreadyBooked * 50;
+        return noOfPeopleWhoHaveAlreadyBooked * 50 + 3000;
     }
 
     public String bookATicket(Integer flightId, Integer passengerId) {
